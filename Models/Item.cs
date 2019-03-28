@@ -12,9 +12,9 @@ namespace list_api.Models
 
     public bool Complete { get; set; }
 
-    public DateTime Created_At { get; set; }
+    public DateTime Created_At { get; set; } = DateTime.Now;
 
-    public DateTime Updated_At { get; set; }
+    public DateTime Updated_At { get; set; } = DateTime.Now;
 
   }
 }

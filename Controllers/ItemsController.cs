@@ -2,47 +2,68 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using list_api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace list_api.Controllers
 
-// OH HIIIIIIIIIIII Andrew!
-//Wazzzzuuuuuuppppppp
 {
   [Route("api/[controller]")]
   [ApiController]
   public class ItemsController : ControllerBase
   {
-    // GET api/values
+    private DatabaseContext db;
+
+    public ItemsController()
+    {
+      this.db = new DatabaseContext();
+    }
+
+    // working
+
     [HttpGet]
-    public ActionResult<IEnumerable<string>> GetAllItems()
+    public ActionResult<IList<Item>> GetAllItems()
     {
-      return new string[] { "value1", "value2" };
+      var items = db.Items.OrderBy(o => o.Updated_At).ToList();
+
+      return items;
     }
 
-    // GET api/values/5
+    // working
+
     [HttpGet("{id}")]
-    public ActionResult<string> GetSingleItem(int id)
+    public ActionResult<Item> GetSingleItem(int id)
     {
-      return "value";
+      var item = db.Items.FirstOrDefault(f => f.Id == id);
+      return item;
     }
 
-    // POST api/values
+    // working
+
     [HttpPost]
-    public void PostNewItem([FromBody] string value)
+    public async Task<ActionResult<Item>> CreateItem(Item newItem)
     {
+      db.Items.Add(newItem);
+      await db.SaveChangesAsync();
+      return newItem;
     }
 
     // PUT api/values/5
     [HttpPut("{id}")]
     public void PutItemUpdate(int id, [FromBody] string value)
     {
+
     }
 
-    // DELETE api/values/5
+    // working
     [HttpDelete("{id}")]
-    public void DeleteSingleItem(int id)
+    public ActionResult DeleteSingleItem(int id)
     {
+      var item = db.Items.FirstOrDefault(f => f.Id == id);
+      db.Items.Remove(item);
+      db.SaveChanges();
+      return Ok();
     }
   }
 }
