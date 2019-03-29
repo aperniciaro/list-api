@@ -54,6 +54,7 @@ namespace list_api.Controllers
     {
       var item = db.Items.FirstOrDefault(f => f.Id == id);
       item.Complete = !item.Complete;
+      item.Updated_At = DateTime.Now;
       db.SaveChanges();
       return item;
     }
