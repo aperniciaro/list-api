@@ -50,9 +50,12 @@ namespace list_api.Controllers
 
     // PUT api/values/5
     [HttpPut("{id}")]
-    public void PutItemUpdate(int id, [FromBody] string value)
+    public ActionResult<Item> UpdateMovie(int id)
     {
-
+      var item = db.Items.FirstOrDefault(f => f.Id == id);
+      item.Complete = !item.Complete;
+      db.SaveChanges();
+      return item;
     }
 
     // working
