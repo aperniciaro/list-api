@@ -42,10 +42,10 @@ namespace list_api.Controllers
     // working
 
     [HttpPost]
-    public async Task<ActionResult<Item>> CreateItem(Item newItem)
+    public ActionResult<Item> CreateItem([FromBody] Item newItem)
     {
       db.Items.Add(newItem);
-      await db.SaveChangesAsync();
+      db.SaveChanges();
       return newItem;
     }
 
