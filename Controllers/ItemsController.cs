@@ -40,13 +40,12 @@ namespace list_api.Controllers
     }
 
     // working
-
     [HttpPost]
-    public ActionResult<Item> CreateItem([FromBody] Item newItem)
+    public ActionResult<Item> CreateItem([FromBody] ItemViewModel newItem)
     {
-      db.Items.Add(newItem);
+      db.Items.Add(newItem.item);
       db.SaveChanges();
-      return newItem;
+      return newItem.item;
     }
 
     // PUT api/values/5
