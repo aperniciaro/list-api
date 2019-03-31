@@ -22,7 +22,7 @@ namespace list_api.Controllers
 
     // working
 
-    [HttpGet]
+    [HttpGet("access_token={access_token}")]
     public ActionResult<IList<Item>> GetAllItems()
     {
       var items = db.Items.OrderBy(o => o.Updated_At).ToList();
@@ -32,7 +32,7 @@ namespace list_api.Controllers
 
     // working
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}/access_token={access_token}")]
     public ActionResult<Item> GetSingleItem(int id)
     {
       var item = db.Items.FirstOrDefault(f => f.Id == id);
@@ -40,7 +40,7 @@ namespace list_api.Controllers
     }
 
     // working
-    [HttpPost]
+    [HttpPost("access_token={access_token}")]
     public ActionResult<Item> CreateItem([FromBody] ItemViewModel newItem)
     {
       db.Items.Add(newItem.item);
@@ -49,7 +49,7 @@ namespace list_api.Controllers
     }
 
     // PUT api/values/5
-    [HttpPut("{id}")]
+    [HttpPut("{id}/access_token={access_token}")]
     public ActionResult<Item> UpdateMovie(int id)
     {
       var item = db.Items.FirstOrDefault(f => f.Id == id);
@@ -60,7 +60,7 @@ namespace list_api.Controllers
     }
 
     // working
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}/access_token={access_token}")]
     public ActionResult DeleteSingleItem(int id)
     {
       var item = db.Items.FirstOrDefault(f => f.Id == id);
